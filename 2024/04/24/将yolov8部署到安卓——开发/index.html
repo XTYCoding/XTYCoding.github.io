@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>将yolov8部署到安卓——开发 | 泥嚎</title><meta name="author" content="XTY"><meta name="copyright" content="XTY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="将yolov8部署到安卓——开发QT安卓环境搭建基本流程起初打算选择5.14版本的QT进行开发，但是实际安装后发现问题多多，主要是安卓的SDK和NDK环境难搞，因为谷歌似乎不再提供单独的SDK供开发者下载，而是集成到了Android Studio中。索性就选择QT6（6.5.3）好了，关于QT安装的教程，网上到处都是，这里就不赘述了（主要是记不清了，而且懒…），记得安装时选择套件时要勾选上安卓。这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="将yolov8部署到安卓——开发">
+<meta property="og:url" content="http://example.com/2024/04/24/%E5%B0%86yolov8%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%89%E5%8D%93%E2%80%94%E2%80%94%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="泥嚎">
+<meta property="og:description" content="将yolov8部署到安卓——开发QT安卓环境搭建基本流程起初打算选择5.14版本的QT进行开发，但是实际安装后发现问题多多，主要是安卓的SDK和NDK环境难搞，因为谷歌似乎不再提供单独的SDK供开发者下载，而是集成到了Android Studio中。索性就选择QT6（6.5.3）好了，关于QT安装的教程，网上到处都是，这里就不赘述了（主要是记不清了，而且懒…），记得安装时选择套件时要勾选上安卓。这">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png">
+<meta property="article:published_time" content="2024-04-24T03:27:00.000Z">
+<meta property="article:modified_time" content="2024-04-29T10:22:34.593Z">
+<meta property="article:author" content="XTY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png"><link rel="shortcut icon" href="https://pic.imgdb.cn/item/6616110668eb935713aa403b.webp"><link rel="canonical" href="http://example.com/2024/04/24/%E5%B0%86yolov8%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%89%E5%8D%93%E2%80%94%E2%80%94%E5%BC%80%E5%8F%91/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '将yolov8部署到安卓——开发',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2024-04-29 18:22:34'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/modify.css"><meta name="generator" content="Hexo 7.0.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pic.imgdb.cn/item/661611e968eb935713ab9f06.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/movies/"><i class="fa-fw fa-brands fa-bilibili"></i><span> 视频</span></a></div><div class="menus_item"><a class="site-page" href="/Game/"><i class="fa-fw fa-solid fa-gamepaddarker"></i><span> 游戏</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 相关</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png')"><nav id="nav"><span id="blog-info"><a href="/" title="泥嚎"><span class="site-name">泥嚎</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/movies/"><i class="fa-fw fa-brands fa-bilibili"></i><span> 视频</span></a></div><div class="menus_item"><a class="site-page" href="/Game/"><i class="fa-fw fa-solid fa-gamepaddarker"></i><span> 游戏</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 相关</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">将yolov8部署到安卓——开发</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-24T03:27:00.000Z" title="发表于 2024-04-24 11:27:00">2024-04-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-29T10:22:34.593Z" title="更新于 2024-04-29 18:22:34">2024-04-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="将yolov8部署到安卓——开发"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url('https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png');"></div><article class="post-content" id="article-container"><h1 id="将yolov8部署到安卓——开发"><a href="#将yolov8部署到安卓——开发" class="headerlink" title="将yolov8部署到安卓——开发"></a>将yolov8部署到安卓——开发</h1><h2 id="QT安卓环境搭建"><a href="#QT安卓环境搭建" class="headerlink" title="QT安卓环境搭建"></a>QT安卓环境搭建</h2><h3 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h3><p>起初打算选择5.14版本的QT进行开发，但是实际安装后发现问题多多，主要是安卓的SDK和NDK环境难搞，因为谷歌似乎不再提供单独的SDK供开发者下载，而是集成到了Android Studio中。索性就选择QT6（6.5.3）好了，关于QT安装的教程，网上到处都是，这里就不赘述了（主要是记不清了，而且懒…），记得安装时选择套件时要勾选上安卓。这里重点讲一下，安装好QT后，配置安卓的环境。这里建议先连接上手机（如果打算用虚拟环境而不是真机调试，那就当我没说），本人设备参数如下：</p>
+<p>打开QT后先进入到左上角的“工具”，</p>
+<p><img src="https://pic.imgdb.cn/item/66287f360ea9cb14036492d5.png"></p>
+<p>选择外部-&gt;配置</p>
+<p><img src="https://pic.imgdb.cn/item/66287fc40ea9cb1403658d7a.png"></p>
+<p>进入设备-&gt;Android，先配置JDK，这个还算容易，网上也很多，注意版本就行，这里就不说了。然后找一个空文件夹，作为Android SDK的路径，选择设置SDK，然后根据提示一路选择，NDK和下面的OpenSSL设置也就设置好了（比起QT5真是方便了太多），记得点应用和确定。</p>
+<p><img src="C:\Users\XingTouYu\AppData\Roaming\Typora\typora-user-images\image-20240424114720748.png" alt="image-20240424114720748"></p>
+<p>然后再重启一下QT Creator，记得确保手机是连上的。接着创建一个项目</p>
+<p><img src="https://pic.imgdb.cn/item/662881800ea9cb1403685612.png"></p>
+<p>在构建套件里应该是有安卓的选项的，根据你的手机架构选择。如果没有，那就确认手机是否连接，SDK和NDK有没有问题，重启，删除SDK安装目录下的东西重来一次，以上方法随便瞎试吧，毕竟配环境这事主打就是一个玄学。</p>
+<p><img src="https://pic.imgdb.cn/item/662881990ea9cb1403687d97.png"></p>
+<p>创建完成后在左下角可以查看配置信息</p>
+<p><img src="https://pic.imgdb.cn/item/662882620ea9cb140369c28c.png"></p>
+<p>检查一下CMake Tool，如果你之前配置过CMake的话，这里可能会变成你自己配置的CMake，如果构建出问题的话，建议换成QT自己的。记得应用和确定，不放心可以重启试试。</p>
+<p><img src="https://pic.imgdb.cn/item/662882db0ea9cb14036a7c65.png"></p>
+<p>然后点开ui文件，放几个按钮试试</p>
+<p><img src="https://pic.imgdb.cn/item/662883570ea9cb14036b465b.png"></p>
+<p>接着就可以点左下角调试了，第一次构建的话，会下载gradle，可能会卡住，我是切换了几次节点然后就下下来了，有可能自己去gradle官网下载，然后解压到QT的目录里，我是没有试啦，具体也不清楚。然后看手机，如果询问是否安装，就点是。最后手机上效果就是这样</p>
+<p><img src="https://pic.imgdb.cn/item/662884350ea9cb14036ef336.jpg"></p>
+<p>PS:如果你构建的时候报了两个错误，并且是乱码的话，可以在这个地方选UTF-8</p>
+<p><img src="https://pic.imgdb.cn/item/662884e70ea9cb1403700f60.png"></p>
+<p>不过这个错误似乎问题不大，目前是这样的</p>
+<p><img src="https://pic.imgdb.cn/item/662884ac0ea9cb14036fbbcb.png"></p>
+<h3 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h3><p>其实上面的流程是第二遍的过程，我第一遍进行到构建时没有问题，手机也能正常显示调试画面，但是之后创建的所有项目都会在调试时闪退，我的解决办法是把手机系统从安卓12升级到安卓13，然后在开发者模式里撤销所有的USB调试授权，然后清空SDK目录，再重启，连接手机，按照上面的步骤重新安装SDK。然后目前来看解决了，至于为什么这样能搞定，那纯属瞎猫撞死耗子，只能感叹配环境实在是玄学。</p>
+<h2 id="QT安卓OpenCv-Ncnn环境配置"><a href="#QT安卓OpenCv-Ncnn环境配置" class="headerlink" title="QT安卓OpenCv&amp;Ncnn环境配置"></a>QT安卓OpenCv&amp;Ncnn环境配置</h2><p>首先添加这几个文件</p>
+<p><img src="https://pic.imgdb.cn/item/662f74060ea9cb1403eeb240.png"></p>
+<p>然后修改.pro文件</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">#自带的</span><br><span class="line">QT       += core gui multimedia multimediawidgets</span><br><span class="line"></span><br><span class="line"><span class="built_in">greaterThan</span>(QT_MAJOR_VERSION, <span class="number">4</span>): QT += widgets</span><br><span class="line"></span><br><span class="line">CONFIG += c++<span class="number">17</span></span><br><span class="line"></span><br><span class="line"># You can make your code fail to compile <span class="keyword">if</span> it uses deprecated APIs.</span><br><span class="line"># In order to <span class="keyword">do</span> so, uncomment the following line.</span><br><span class="line">#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=<span class="number">0x060000</span>    <span class="meta"># disables all the APIs deprecated before Qt 6.0.0</span></span><br><span class="line"></span><br><span class="line">SOURCES += \</span><br><span class="line">    main.cpp \</span><br><span class="line">    widget.cpp \</span><br><span class="line">    yolo.cpp</span><br><span class="line"></span><br><span class="line">HEADERS += \</span><br><span class="line">    widget.h \</span><br><span class="line">    yolo.h</span><br><span class="line"></span><br><span class="line">FORMS += \</span><br><span class="line">    widget.ui</span><br><span class="line"></span><br><span class="line"># Default rules <span class="keyword">for</span> deployment.</span><br><span class="line">qnx: target.path = /tmp/$${TARGET}/bin</span><br><span class="line"><span class="keyword">else</span>: unix:!android: target.path = /opt/$${TARGET}/bin</span><br><span class="line">!<span class="built_in">isEmpty</span>(target.path): INSTALLS += target</span><br><span class="line">#自带的</span><br><span class="line">    </span><br><span class="line"><span class="meta">#ncnn需要加</span></span><br><span class="line">QMAKE_CXXFLAGS += -fopenmp</span><br><span class="line">QMAKE_LFLAGS += -fopenmp</span><br><span class="line">LIBS += -fopenmp -<span class="type">static</span>-openmp</span><br><span class="line"><span class="meta">#ncnn需要加</span></span><br><span class="line">    </span><br><span class="line">#上面添加完libopencv_java4.so文件自动生成的</span><br><span class="line"><span class="built_in">contains</span>(ANDROID_TARGET_ARCH,arm64-v8a) {</span><br><span class="line">    ANDROID_EXTRA_LIBS = \</span><br><span class="line">        $$PWD/../../../Dev/OpenCV/opencv-android/OpenCV-android-sdk/sdk/native/libs/arm64-v8a/libopencv_java4.so</span><br><span class="line">}</span><br><span class="line">#上面添加完libopencv_java4.so文件自动生成的</span><br><span class="line"></span><br><span class="line">#自己加的</span><br><span class="line">android {</span><br><span class="line">ANDROID_OPENCV = D:/Dev/OpenCV/openCV-android/OpenCV-android-sdk/sdk/native</span><br><span class="line"></span><br><span class="line">INCLUDEPATH += \</span><br><span class="line">$$ANDROID_OPENCV/jni/include/opencv2 \</span><br><span class="line">$$ANDROID_OPENCV/jni/include \</span><br><span class="line">D:/Dev/ncnn<span class="number">-20240410</span>-android/arm64-v8a/include \</span><br><span class="line">D:/Dev/ncnn<span class="number">-20240410</span>-android/arm64-v8a/include/ncnn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">LIBS += \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_calib3d.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_core.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_dnn.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_features2d.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_flann.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_gapi.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_highgui.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_imgcodecs.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_imgproc.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_ml.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_objdetect.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_photo.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_stitching.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_video.a \</span><br><span class="line">$$ANDROID_OPENCV/staticlibs/arm64-v8a/libopencv_videoio.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/libade.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/libcpufeatures.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/libIlmImf.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/libittnotify.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/liblibjpeg-turbo.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/liblibopenjp2.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/liblibpng.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/liblibprotobuf.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/liblibtiff.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/liblibwebp.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/libquirc.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/libtbb.a \</span><br><span class="line">$$ANDROID_OPENCV/<span class="number">3</span>rdparty/libs/arm64-v8a/libtegra_hal.a \</span><br><span class="line">$$ANDROID_OPENCV/libs/arm64-v8a/libopencv_java4.so \</span><br><span class="line">D:/Dev/ncnn<span class="number">-20240410</span>-android/arm64-v8a/lib/libncnn.a \</span><br><span class="line">D:/Dev/QT-Android/Android-SDK/ndk/<span class="number">25.1</span><span class="number">.8937393</span>/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/<span class="number">33</span>/libandroid.so \</span><br><span class="line">D:/Dev/QT-Android/Android-SDK/ndk/<span class="number">25.1</span><span class="number">.8937393</span>/toolchains/llvm/prebuilt/windows-x86_64/lib64/clang/<span class="number">14.0</span><span class="number">.6</span>/lib/linux/aarch64/libomp.a \</span><br><span class="line">D:/Dev/QT-Android/Android-SDK/ndk/<span class="number">25.1</span><span class="number">.8937393</span>/toolchains/llvm/prebuilt/windows-x86_64/lib64/clang/<span class="number">14.0</span><span class="number">.6</span>/lib/linux/aarch64/libomp.so</span><br><span class="line"></span><br><span class="line">#权重的路径</span><br><span class="line">data.files += yolov8n-op12.bin</span><br><span class="line">data.files += yolov8n-op12.param</span><br><span class="line">data.path = /assets/models</span><br><span class="line">INSTALLS += data</span><br><span class="line">#权重的路径</span><br><span class="line">    </span><br><span class="line">}</span><br><span class="line">#自己加的</span><br><span class="line"></span><br><span class="line">#加完以后 上面自动添加libandroid.so和libomp.so文件</span><br><span class="line">ANDROID_EXTRA_LIBS += D:/Dev/QT-Android/Android-SDK/ndk/<span class="number">25.1</span><span class="number">.8937393</span>/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/aarch64-linux-android/<span class="number">33</span>/libandroid.so \</span><br><span class="line">                      D:/Dev/QT-Android/Android-SDK/ndk/<span class="number">25.1</span><span class="number">.8937393</span>/toolchains/llvm/prebuilt/windows-x86_64/lib64/clang/<span class="number">14.0</span><span class="number">.6</span>/lib/linux/aarch64/libomp.so</span><br><span class="line">#加完以后 上面自动添加libandroid.so和libomp.so文件</span><br></pre></td></tr></tbody></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">XTY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/04/24/%E5%B0%86yolov8%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%89%E5%8D%93%E2%80%94%E2%80%94%E5%BC%80%E5%8F%91/">http://example.com/2024/04/24/%E5%B0%86yolov8%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%89%E5%8D%93%E2%80%94%E2%80%94%E5%BC%80%E5%8F%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">泥嚎</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer=""></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/05/01/%E6%AF%95%E8%AE%BE/" title=""><img class="cover" src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2024/04/20/%E5%B0%86yolov8%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%89%E5%8D%93%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95/" title="将yolov8部署到安卓——测试"><img class="cover" src="https://images4.alphacoders.com/129/1291914.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">将yolov8部署到安卓——测试</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pic.imgdb.cn/item/661611e968eb935713ab9f06.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info__name">XTY</div><div class="author-info__description">一个可怜的人</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xxxxx" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:3401849905@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/247960956" target="_blank" title="B站"><i class="fa-brands fa-bilibili"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%86yolov8%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%89%E5%8D%93%E2%80%94%E2%80%94%E5%BC%80%E5%8F%91"><span class="toc-number">1.</span> <span class="toc-text">将yolov8部署到安卓——开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#QT%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.1.</span> <span class="toc-text">QT安卓环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">基本流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%91"><span class="toc-number">1.1.2.</span> <span class="toc-text">坑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QT%E5%AE%89%E5%8D%93OpenCv-Ncnn%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">QT安卓OpenCv&amp;Ncnn环境配置</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/07/03/%E5%B9%B6%E6%9F%A5%E9%9B%86/" title="并查集"><img src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="并查集"></a><div class="content"><a class="title" href="/2024/07/03/%E5%B9%B6%E6%9F%A5%E9%9B%86/" title="并查集">并查集</a><time datetime="2024-07-03T03:26:20.000Z" title="发表于 2024-07-03 11:26:20">2024-07-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/03/yolov1%E7%AE%97%E6%B3%95%E8%A7%A3%E6%9E%90/" title="YOLO算法解析"><img src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="YOLO算法解析"></a><div class="content"><a class="title" href="/2024/05/03/yolov1%E7%AE%97%E6%B3%95%E8%A7%A3%E6%9E%90/" title="YOLO算法解析">YOLO算法解析</a><time datetime="2024-05-03T01:59:27.000Z" title="发表于 2024-05-03 09:59:27">2024-05-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/01/%E6%AF%95%E8%AE%BE/" title="无题"><img src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"></a><div class="content"><a class="title" href="/2024/05/01/%E6%AF%95%E8%AE%BE/" title="无题">无题</a><time datetime="2024-05-01T01:56:50.219Z" title="发表于 2024-05-01 09:56:50">2024-05-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/24/%E5%B0%86yolov8%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%89%E5%8D%93%E2%80%94%E2%80%94%E5%BC%80%E5%8F%91/" title="将yolov8部署到安卓——开发"><img src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="将yolov8部署到安卓——开发"></a><div class="content"><a class="title" href="/2024/04/24/%E5%B0%86yolov8%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%89%E5%8D%93%E2%80%94%E2%80%94%E5%BC%80%E5%8F%91/" title="将yolov8部署到安卓——开发">将yolov8部署到安卓——开发</a><time datetime="2024-04-24T03:27:00.000Z" title="发表于 2024-04-24 11:27:00">2024-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/20/%E5%B0%86yolov8%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%89%E5%8D%93%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95/" title="将yolov8部署到安卓——测试"><img src="https://images4.alphacoders.com/129/1291914.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="将yolov8部署到安卓——测试"></a><div class="content"><a class="title" href="/2024/04/20/%E5%B0%86yolov8%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%89%E5%8D%93%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95/" title="将yolov8部署到安卓——测试">将yolov8部署到安卓——测试</a><time datetime="2024-04-20T01:54:00.000Z" title="发表于 2024-04-20 09:54:00">2024-04-20</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">©2020 - 2024 By XTY</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
