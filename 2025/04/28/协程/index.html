@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>协程 | XTY的妙妙屋</title><meta name="author" content="XTY"><meta name="copyright" content="XTY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="协程协程的概念使用协程可以让一个函数分散在好几帧或者一段时间内执行完成 例子加入我们需要实现一个让人物透明度逐渐降到0消失的功能需要实现 123456789void Fade(){    Color c = renderer.material.color;    for (float alpha = 1f; alpha >= 0; alpha -= 0.1f)    {">
+<meta property="og:type" content="article">
+<meta property="og:title" content="协程">
+<meta property="og:url" content="http://example.com/2025/04/28/%E5%8D%8F%E7%A8%8B/index.html">
+<meta property="og:site_name" content="XTY的妙妙屋">
+<meta property="og:description" content="协程协程的概念使用协程可以让一个函数分散在好几帧或者一段时间内执行完成 例子加入我们需要实现一个让人物透明度逐渐降到0消失的功能需要实现 123456789void Fade(){    Color c = renderer.material.color;    for (float alpha = 1f; alpha >= 0; alpha -= 0.1f)    {">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png">
+<meta property="article:published_time" content="2025-04-28T02:43:59.000Z">
+<meta property="article:modified_time" content="2025-04-28T09:02:49.259Z">
+<meta property="article:author" content="XTY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png"><link rel="shortcut icon" href="https://pic.imgdb.cn/item/6616110668eb935713aa403b.webp"><link rel="canonical" href="http://example.com/2025/04/28/%E5%8D%8F%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '协程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2025-04-28 17:02:49'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/modify.css"><script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.jsdelivr.net/gh/XTYCoding/ImageRepository@main/Izumi.Konata.full.834017.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr class="custom-hr"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/movies/"><i class="fa-fw fa-brands fa-bilibili"></i><span> 视频</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png')"><nav id="nav"><span id="blog-info"><a href="/" title="XTY的妙妙屋"><span class="site-name">XTY的妙妙屋</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/movies/"><i class="fa-fw fa-brands fa-bilibili"></i><span> 视频</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">协程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-04-28T02:43:59.000Z" title="发表于 2025-04-28 10:43:59">2025-04-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-28T09:02:49.259Z" title="更新于 2025-04-28 17:02:49">2025-04-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="协程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url('https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png');"></div><article class="post-content" id="article-container"><h1 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h1><h2 id="协程的概念"><a href="#协程的概念" class="headerlink" title="协程的概念"></a>协程的概念</h2><p>使用协程可以让一个函数分散在好几帧或者一段时间内执行完成</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>加入我们需要实现一个让人物透明度逐渐降到0消失的功能需要实现</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Fade</span>()</span></span><br><span class="line">{</span><br><span class="line">    Color c = renderer.material.color;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">float</span> alpha = <span class="number">1f</span>; alpha &gt;= <span class="number">0</span>; alpha -= <span class="number">0.1f</span>)</span><br><span class="line">    {</span><br><span class="line">        c.a = alpha;</span><br><span class="line">        renderer.material.color = c;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果将这个函数在Update中调用，由于Update在一帧内执行完，因此并不会有人物逐渐透明的效果，而是一瞬间消失。因此，使用协程让函数循环分散到每一帧执行</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">IEnumerator <span class="title">Fade</span>()</span></span><br><span class="line">{</span><br><span class="line">    Color c = renderer.material.color;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">float</span> alpha = <span class="number">1f</span>; alpha &gt;= <span class="number">0</span>; alpha -= <span class="number">0.1f</span>)</span><br><span class="line">    {</span><br><span class="line">        c.a = alpha;</span><br><span class="line">        renderer.material.color = c;</span><br><span class="line">        <span class="keyword">yield</span> <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>协程需要以IEnumerator声明</li>
+<li>协程内需要有yield return语句</li>
+<li>使用return null会让函数在这一句暂停，等到下一帧再执行后面的语句</li>
+<li>如果用的是return new WaitForSeconds()，则会让后面的语句在若干秒后执行</li>
+</ul>
+<h2 id="应用：添加打击顿帧-抖动效果"><a href="#应用：添加打击顿帧-抖动效果" class="headerlink" title="应用：添加打击顿帧&amp;抖动效果"></a>应用：添加打击顿帧&amp;抖动效果</h2><p>创建一个AttackSense脚本挂载到MainCamera下，由于AttackSense作为工具类使用，采用单例模式编写。</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AttackSense</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AttackSense instance;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> AttackSense Instance</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(instance == <span class="literal">null</span>)</span><br><span class="line">                instance = Transform.FindAnyObjectByType&lt;AttackSense&gt;();</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这段代码实现了一个<strong>单例模式（Singleton）</strong>的静态属性<code>Instance</code>，用于在Unity中全局访问唯一的<code>AttackSense</code>实例。以下是关键解析：</p>
+<hr>
+<h3 id="1-语法与设计模式"><a href="#1-语法与设计模式" class="headerlink" title="1. 语法与设计模式"></a><strong>1. 语法与设计模式</strong></h3><ul>
+<li><p>静态属性（Static Property）：通过public static AttackSense Instance定义了一个类级别的属性，无需实例化即可通过AttackSense.Instance访问。</p>
+</li>
+<li><p>延迟初始化（Lazy Initialization）：在get访问器中，首次调用时检查instance是否为null，若为空则通过Transform.FindAnyObjectByType<attacksense>()</attacksense></p>
+<p>查找场景中的现有实例。</p>
+</li>
+</ul>
+<hr>
+<h3 id="2-关键点"><a href="#2-关键点" class="headerlink" title="2. 关键点"></a><strong>2. 关键点</strong></h3><ul>
+<li>单例模式核心：<ul>
+<li>确保全局唯一实例。</li>
+<li>提供全局访问点（Instance属性）。</li>
+</ul>
+</li>
+<li><strong>Unity特定方法</strong>：<br>FindAnyObjectByType<t>()是Unity的API，用于快速查找场景中的组件实例。</t></li>
+</ul>
+<h3 id="3-实现顿帧"><a href="#3-实现顿帧" class="headerlink" title="3. 实现顿帧"></a>3. 实现顿帧</h3><p>AttackSense内的函数</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">HitPause</span>(<span class="params"><span class="built_in">int</span> duration</span>)</span></span><br><span class="line">{</span><br><span class="line">    StartCoroutine(Pause(duration));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function">IEnumerator <span class="title">Pause</span>(<span class="params"><span class="built_in">int</span> duration</span>)</span></span><br><span class="line">{</span><br><span class="line">    <span class="built_in">float</span> pauseTime = duration / <span class="number">60</span>; <span class="comment">//duration是帧数，计算暂停时间</span></span><br><span class="line">    Time.timeScale = <span class="number">0</span>;              <span class="comment">//游戏暂停</span></span><br><span class="line">    <span class="function"><span class="keyword">yield</span> <span class="keyword">return</span> <span class="keyword">new</span> <span class="title">WaitForSeconds</span>(<span class="params">pauseTime</span>)</span>; <span class="comment">//等一段时间后恢复正常游戏速度</span></span><br><span class="line">    Time.timeScale = <span class="number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><p>Time.timeScale 是 Unity 引擎中控制<strong>游戏时间流逝速度</strong>的核心属性，其默认值为 <code>1.0</code>，表示游戏时间与现实时间同步。</p>
+</li>
+<li><p><code>Time.deltaTime</code> 变为 <code>0</code>，导致所有基于它的运动、动画计算停止（如 <code>transform.position += speed * Time.deltaTime</code>）</p>
+</li>
+</ul>
+<h3 id="实现镜头震动"><a href="#实现镜头震动" class="headerlink" title="实现镜头震动"></a>实现镜头震动</h3><figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="built_in">bool</span> isShake;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">CameraShake</span>(<span class="params"><span class="built_in">float</span> duration,<span class="built_in">float</span> power</span>)</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (!isShake) <span class="comment">//避免频繁震动</span></span><br><span class="line">    {</span><br><span class="line">        StartCoroutine(Shake(duration,power));</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function">IEnumerator <span class="title">Shake</span>(<span class="params"><span class="built_in">float</span> duration,<span class="built_in">float</span> power </span>)</span></span><br><span class="line">{</span><br><span class="line">    isShake = <span class="literal">true</span>;</span><br><span class="line">    Transform camera = Camera.main.transform;</span><br><span class="line">    Vector3 startPosition = camera.position;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (duration&gt;<span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        camera.position = Random.insideUnitSphere*power + startPosition;</span><br><span class="line">        duration -= Time.timeScale;</span><br><span class="line">        <span class="keyword">yield</span> <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    }</span><br><span class="line">    camera.position = startPosition; <span class="comment">//震动完镜头恢复原始位置</span></span><br><span class="line">    isShake = <span class="literal">false</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="如何触发"><a href="#如何触发" class="headerlink" title="如何触发"></a>如何触发</h3><figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Attack</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">{</span><br><span class="line">    [<span class="meta">Header(<span class="string">"基本属性"</span>)</span>]</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> damage;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> power;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> range;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> duration;</span><br><span class="line">    <span class="comment">// Start is called before the first frame update</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnTriggerEnter2D</span>(<span class="params">Collider2D collision</span>)</span></span><br><span class="line">    {</span><br><span class="line">        Debug.Log(collision.name);</span><br><span class="line">        collision.GetComponent&lt;Character&gt;()?.TakeDamage(<span class="keyword">this</span>);</span><br><span class="line">        AttackSense.Instance.HitPause(duration);</span><br><span class="line">        AttackSense.Instance.CameraShake(duration, power*<span class="number">0.01f</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">XTY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/04/28/%E5%8D%8F%E7%A8%8B/">http://example.com/2025/04/28/%E5%8D%8F%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">XTY的妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer=""></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/04/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%A0%86/" title="数据结构与算法:堆"><img class="cover" src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">数据结构与算法:堆</div></div></a></div><div class="next-post pull-right"><a href="/2025/04/26/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/" title="游戏开发设计模式：享元模式"><img class="cover" src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">游戏开发设计模式：享元模式</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/XTYCoding/ImageRepository@main/Izumi.Konata.full.834017.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info__name">XTY</div><div class="author-info__description">讨厌无聊的人</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XTYCoding" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:3401849905@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/247960956" target="_blank" title="B站"><i class="fa-brands fa-bilibili"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">正在学习游戏开发，用热爱对抗世界的虚无</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%8F%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">协程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%8F%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">协程的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%EF%BC%9A%E6%B7%BB%E5%8A%A0%E6%89%93%E5%87%BB%E9%A1%BF%E5%B8%A7-%E6%8A%96%E5%8A%A8%E6%95%88%E6%9E%9C"><span class="toc-number">1.3.</span> <span class="toc-text">应用：添加打击顿帧&amp;抖动效果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AF%AD%E6%B3%95%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. 语法与设计模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%85%B3%E9%94%AE%E7%82%B9"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. 关键点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%9E%E7%8E%B0%E9%A1%BF%E5%B8%A7"><span class="toc-number">1.3.3.</span> <span class="toc-text">3. 实现顿帧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E9%95%9C%E5%A4%B4%E9%9C%87%E5%8A%A8"><span class="toc-number">1.3.4.</span> <span class="toc-text">实现镜头震动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A6%E5%8F%91"><span class="toc-number">1.3.5.</span> <span class="toc-text">如何触发</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/03/%E5%A4%A9%E5%9B%BD%E6%8B%AF%E6%95%91%E4%BA%8C/" title="天国拯救二"><img src="https://cdn.jsdelivr.net/gh/XTYCoding/ImageRepository@main/1391178.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="天国拯救二"></a><div class="content"><a class="title" href="/2025/05/03/%E5%A4%A9%E5%9B%BD%E6%8B%AF%E6%95%91%E4%BA%8C/" title="天国拯救二">天国拯救二</a><time datetime="2025-05-03T02:14:22.000Z" title="发表于 2025-05-03 10:14:22">2025-05-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/29/%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97-%E5%AE%9E%E7%8E%B0%E8%A7%92%E8%89%B2%E7%A7%BB%E5%8A%A8/" title="开发日志:实现角色移动"><img src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="开发日志:实现角色移动"></a><div class="content"><a class="title" href="/2025/04/29/%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97-%E5%AE%9E%E7%8E%B0%E8%A7%92%E8%89%B2%E7%A7%BB%E5%8A%A8/" title="开发日志:实现角色移动">开发日志:实现角色移动</a><time datetime="2025-04-29T12:34:05.000Z" title="发表于 2025-04-29 20:34:05">2025-04-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%A0%86/" title="数据结构与算法:堆"><img src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据结构与算法:堆"></a><div class="content"><a class="title" href="/2025/04/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%A0%86/" title="数据结构与算法:堆">数据结构与算法:堆</a><time datetime="2025-04-28T09:36:40.000Z" title="发表于 2025-04-28 17:36:40">2025-04-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/28/%E5%8D%8F%E7%A8%8B/" title="协程"><img src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="协程"></a><div class="content"><a class="title" href="/2025/04/28/%E5%8D%8F%E7%A8%8B/" title="协程">协程</a><time datetime="2025-04-28T02:43:59.000Z" title="发表于 2025-04-28 10:43:59">2025-04-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/26/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/" title="游戏开发设计模式：享元模式"><img src="https://pic.imgdb.cn/item/66160c2a68eb935713a25236.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="游戏开发设计模式：享元模式"></a><div class="content"><a class="title" href="/2025/04/26/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/" title="游戏开发设计模式：享元模式">游戏开发设计模式：享元模式</a><time datetime="2025-04-26T13:46:06.000Z" title="发表于 2025-04-26 21:46:06">2025-04-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">©2020 - 2025 By XTY</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
